@@ -9,4 +9,4 @@ phases:
       - sam --version
       - sam build
       #- sam package --s3-bucket testabcd123ab --output-template-file template.yml
-      - sam deploy
+      - sam deploy --no-confirm-changeset
