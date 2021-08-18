@@ -8,4 +8,5 @@ phases:
     commands:
       - sam --version
       - sam build
-      - sam package --s3-bucket testabcd123ab --output-template-file template.yml
+      #- sam package --s3-bucket testabcd123ab --output-template-file template.yml
+      - sam deploy
