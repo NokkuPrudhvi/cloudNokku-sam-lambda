@@ -77,6 +77,19 @@ Resources:
         - python3.7
     Metadata:
       BuildMethod: python3.7
+  
+  libs:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: ml-model-layer
+      Description: Dependencies for the blank sample app.
+      Content:
+        S3Bucket: ml-model-deployment-enpoint
+        S3Key: ml_model.joblib
+      CompatibleRuntimes:
+        - python3.7 
+      BuildMethod: python3.7
+
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
