@@ -74,9 +74,9 @@ Resources:
     Properties:
       ContentUri: my_layer
       CompatibleRuntimes:
-        - python3.8
+        - python3.7
     Metadata:
-      BuildMethod: makefile
+      BuildMethod: Makefile
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
