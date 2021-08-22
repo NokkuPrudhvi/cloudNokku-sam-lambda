@@ -22,12 +22,12 @@ Globals:
     Timeout: 3
 
 Resources:
-  HelloWorldFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      CodeUri: hello_world/
-      Handler: app.lambda_handler
-      Runtime: python3.7
+#   HelloWorldFunction:
+#     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+#     Properties:
+#       CodeUri: hello_world/
+#       Handler: app.lambda_handler
+#       Runtime: python3.7
       # Events:
       #   HelloWorld:
       #     Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -74,20 +74,9 @@ Resources:
     Properties:
       ContentUri: my_layer
       CompatibleRuntimes:
-        - python3.8
+        - python3.7
     Metadata:
-      BuildMethod: Makefile
-  
-  libs:
-    Type: AWS::Serverless::LayerVersion
-    Properties:
-      LayerName: ml-model-layer
-      Description: Dependencies for the blank sample app.
-      Content:
-        S3Bucket: ml-model-deployment-enpoint
-        S3Key: ml_model.joblib
-      CompatibleRuntimes:
-        - python3.7 
+      BuildMethod: python3.7
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
