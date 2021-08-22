@@ -2,36 +2,70 @@ import json
 
 # import requests
 
+import joblib
+
+model_name = '/opt/ml_model.joblib'
+model = joblib.load(model_name)
 
 def lambda_handler(event, context):
-    """Sample pure Lambda function
+    body = {
+        "message": "OK",
+    }
 
-    Parameters
-    ----------
-    event: dict, required
-        API Gateway Lambda Proxy Input Format
+    if 'queryStringParameters' in event.keys():
+        params = event['queryStringParameters']
 
-        Event doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
+        medInc = float(params['medInc']) / 100000
+        houseAge = float(params['houseAge'])
+        aveRooms = float(params['aveRooms'])
+        aveBedrms = float(params['aveBedrms'])
+        population = float(params['population'])
+        aveOccup = float(params['aveOccup'])
+        latitude = float(params['latitude'])
+        longitude = float(params['longitude'])
 
-    context: object, required
-        Lambda Context runtime methods and attributes
+        inputVector = [medInc, houseAge, aveRooms, aveBedrms, population, aveOccup, latitude, longitude]
+        data = [inputVector]
+        predictedPrice = model.predict(data)[0] * 100000 # convert to units of 1 USDs
+        predictedPrice = round(predictedPrice, 2)
+        body['predictedPrice'] = predictedPrice
 
-        Context doc: https://docs.aws.amazon.com/lambda/latest/dg/python-context-object.html
+    else:
+        body['message'] = 'queryStringParameters not in event.'
 
-    Returns
-    ------
-    API Gateway Lambda Proxy Output Format: dict
+    print(body['message'])
 
-        Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
-    """
+    response = {
+        "statusCode": 200,
+        "body": json.dumps(body),
+        "headers": {
+            "Content-Type": 'application/json',
+            "Access-Control-Allow-Origin": "*"
+        }
+    }
 
-    # try:
-    #     ip = requests.get("http://checkip.amazonaws.com/")
-    # except requests.RequestException as e:
-    #     # Send some context about this error to Lambda Logs
-    #     print(e)
+    return response
 
-    #     raise e
+def do_main():
+    event = {
+        'queryStringParameters': {
+            'medInc': 200000,
+            'houseAge': 10,
+            'aveRooms': 4,
+            'aveBedrms': 1,
+            'population': 800,
+            'aveOccup': 3,
+            'latitude': 37.54,
+            'longitude': -121.72
+        }
+    }
+
+    response = predict(event, None)
+    body = json.loads(response['body'])
+    print('Price:', body['predictedPrice'])
+
+    with open('event.json', 'w') as event_file:
+        event_file.write(json.dumps(event))
 
     return {
         "statusCode": 200,
@@ -40,3 +74,5 @@ def lambda_handler(event, context):
             # "location": ip.text.replace("\n", "")
         }),
     }
+
+#do_main()
