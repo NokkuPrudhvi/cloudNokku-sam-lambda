@@ -84,8 +84,8 @@ Resources:
       LayerName: ml-model-layer
       Description: Dependencies for the blank sample app.
       Content:
-        S3Bucket: ml-model-deployment-enpoint
-        S3Key: ml_model.joblib
+        S3Bucket: cloudnokku-sam-lambda
+        S3Key: ml_model.zip
       CompatibleRuntimes:
         - python3.7 
 
