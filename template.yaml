@@ -81,14 +81,12 @@ Resources:
   libs:
     Type: AWS::Serverless::LayerVersion
     Properties:
-      LayerName: ml-model-layer
-      Description: Dependencies for the blank sample app.
-      Content:
-        S3Bucket: cloudnokku-sam-lambda
-        S3Key: ml_model.zip
+      LayerName: MymodelLayer
+      Description: Layer description
+      ContentUri: 's3://cloudnokku-sam-lambda/ml_model.zip'
       CompatibleRuntimes:
-        - python3.7 
-
+        - python3.7
+      #RetentionPolicy: Retain
 
 
 Outputs:
