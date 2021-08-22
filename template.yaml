@@ -5,17 +5,17 @@ Description: >
 
   Sample SAM Template for cloudNokku-sam-lambda
 
-Parameters:
-  InferenceImage:
-    Type: String
-  InferenceS3ModelLocation:
-    Type: String
-  ExecutionRoleArnParameter:
-    Type: String
-  SecurityGroups:
-    Type: String
-  Subnets:
-    Type: String
+# Parameters:
+#   InferenceImage:
+#     Type: String
+#   InferenceS3ModelLocation:
+#     Type: String
+#   ExecutionRoleArnParameter:
+#     Type: String
+#   SecurityGroups:
+#     Type: String
+#   Subnets:
+#     Type: String
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
@@ -77,6 +77,17 @@ Resources:
         - python3.8
     Metadata:
       BuildMethod: Makefile
+  
+  libs:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: ml-model-layer
+      Description: Dependencies for the blank sample app.
+      Content:
+        S3Bucket: ml-model-deployment-enpoint
+        S3Key: ml_model.joblib
+      CompatibleRuntimes:
+        - python3.7 
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
