@@ -88,7 +88,7 @@ Resources:
         S3Key: ml_model.joblib
       CompatibleRuntimes:
         - python3.7 
-      BuildMethod: python3.7
+
 
 
 Outputs:
