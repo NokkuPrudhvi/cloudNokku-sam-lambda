@@ -12,8 +12,9 @@ Parameters:
   InferenceS3ModelLocation:
     Type: String
     Default: "s3://cloudnokku-sam-lambda/"
-  # ExecutionRoleArnParameter:
-  #   Type: String
+  ExecutionRoleArnParameter:
+    Type: String
+    Default: "arn:aws:iam::659121023370:role/service-role/AmazonSageMaker-ExecutionRole-20210814T163200"
   # SecurityGroups:
   #   Type: String
   # Subnets:
@@ -48,7 +49,7 @@ Resources:
       PrimaryContainer:
         Image: !Ref InferenceImage
         ModelDataUrl: !Ref InferenceS3ModelLocation
-      # ExecutionRoleArn: !Ref ExecutionRoleArnParameter 
+      ExecutionRoleArn: !Ref ExecutionRoleArnParameter 
       # VpcConfig:
       #   SecurityGroupIds: !Split [',',!Ref SecurityGroups]
       #   Subnets: !Split [',',!Ref Subnets]
