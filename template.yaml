@@ -11,7 +11,7 @@ Parameters:
     Default: "785573368785.dkr.ecr.us-east-1.amazonaws.com/xgboost-neo:latest"
   InferenceS3ModelLocation:
     Type: String
-    Default: "s3://cloudnokku-sam-lambda/ml_model.zip"
+    Default: "s3://cloudnokku-sam-lambda/model/"
   ExecutionRoleArnParameter:
     Type: String
     Default: "arn:aws:iam::659121023370:role/service-role/AmazonSageMaker-ExecutionRole-20210814T163200"
