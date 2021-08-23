@@ -11,7 +11,7 @@ Parameters:
     Default: "785573368785.dkr.ecr.us-east-1.amazonaws.com/xgboost-neo:latest"
   InferenceS3ModelLocation:
     Type: String
-    Default: "s3://cloudnokku-sam-lambda/"
+    Default: "s3://cloudnokku-sam-lambda/ml_model.zip"
   ExecutionRoleArnParameter:
     Type: String
     Default: "arn:aws:iam::659121023370:role/service-role/AmazonSageMaker-ExecutionRole-20210814T163200"
@@ -45,7 +45,7 @@ Resources:
   SagemakerInferenceModel:
     Type: 'AWS::SageMaker::Model'
     Properties:
-      ModelName: "cloudnokku_inference_model"
+      ModelName: "cloudnokku-inference-model"
       PrimaryContainer:
         Image: !Ref InferenceImage
         ModelDataUrl: !Ref InferenceS3ModelLocation
@@ -57,7 +57,7 @@ Resources:
   SagemakerEndPointConfigInference:
     Type: 'AWS::SageMaker::EndpointConfig'
     Properties:
-      EndpointConfigName: "cloudnokku_inference_endpoint_config"
+      EndpointConfigName: "cloudnokku-inference-endpoint-config"
       ProductVariants:
         - InstanceType: "ml.t2.medium"
           InitialVariantWeight: 1
@@ -70,8 +70,8 @@ Resources:
   SagemakerEndpointInference:
     Type: 'AWS::SageMaker::Endpoint'
     Properties:
-      EndpointName: "cloudnokku_inference_endpoint"
-      EndpointConfigName: "cloudnokku_inference_endpoint_config"
+      EndpointName: "cloudnokku-inference-endpoint"
+      EndpointConfigName: "cloudnokku-inference-endpoint-config"
     DependsOn:
       - SagemakerEndPointConfigInference
 
