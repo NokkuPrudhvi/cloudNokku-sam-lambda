@@ -62,7 +62,7 @@ Resources:
         - InstanceType: "ml.t2.medium"
           InitialVariantWeight: 1
           InitialInstanceCount: 1
-          ModelName: "cloudnokku_inference_model"
+          ModelName: "cloudnokku-inference-model"
           VariantName: 'AllTraffic'
     DependsOn:
       - SagemakerInferenceModel
