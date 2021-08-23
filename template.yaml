@@ -67,7 +67,7 @@ Resources:
       - SagemakerInferenceModel
 
   SagemakerEndpointInference:
-    Type: "AWS::Sagemaker::Endpoint"
+    Type: 'AWS::SageMaker::Endpoint'
     Properties:
       EndpointName: "cloudnokku_inference_endpoint"
       EndpointConfigName: "cloudnokku_inference_endpoint_config"
