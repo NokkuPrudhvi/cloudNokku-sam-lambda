@@ -58,7 +58,7 @@ Resources:
     Type: 'AWS::SageMaker::EndpointConfig'
     Properties:
       EndpointConfigName: "cloudnokku-inference-endpoint-config"
-      ProductVariants:
+      ProductionVariants:
         - InstanceType: "ml.t2.medium"
           InitialVariantWeight: 1
           InitialInstanceCount: 1
