@@ -5,17 +5,19 @@ Description: >
 
   Sample SAM Template for cloudNokku-sam-lambda
 
-# Parameters:
-#   InferenceImage:
-#     Type: String
-#   InferenceS3ModelLocation:
-#     Type: String
-#   ExecutionRoleArnParameter:
-#     Type: String
-#   SecurityGroups:
-#     Type: String
-#   Subnets:
-#     Type: String
+Parameters:
+  InferenceImage:
+    Type: String
+    Default: "785573368785.dkr.ecr.us-east-1.amazonaws.com/xgboost-neo:latest"
+  InferenceS3ModelLocation:
+    Type: String
+    Default: "s3://cloudnokku-sam-lambda/"
+  # ExecutionRoleArnParameter:
+  #   Type: String
+  # SecurityGroups:
+  #   Type: String
+  # Subnets:
+  #   Type: String
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
@@ -39,38 +41,38 @@ Resources:
              Method: get
   
     
-  # SagemakerInferenceModel:
-  #   Type: 'AWS::SageMaker::Model'
-  #   Properties:
-  #     ModelName: "cloudnokku_inference_model"
-  #     PrimaryContainer:
-  #       Image: !Ref InferenceImage
-  #       ModelDataUrl: !Ref InferenceS3ModelLocation
-  #     ExecutionRoleArn: !Ref ExecutionRoleArnParameter 
-  #     VpcConfig:
-  #       SecurityGroupIds: !Split [',',!Ref SecurityGroups]
-  #       Subnets: !Split [',',!Ref Subnets]
+  SagemakerInferenceModel:
+    Type: 'AWS::SageMaker::Model'
+    Properties:
+      ModelName: "cloudnokku_inference_model"
+      PrimaryContainer:
+        Image: !Ref InferenceImage
+        ModelDataUrl: !Ref InferenceS3ModelLocation
+      # ExecutionRoleArn: !Ref ExecutionRoleArnParameter 
+      # VpcConfig:
+      #   SecurityGroupIds: !Split [',',!Ref SecurityGroups]
+      #   Subnets: !Split [',',!Ref Subnets]
   
-  # SagemakerEndPointConfigInference:
-  #   Type: 'AWS::SageMaker::EndpointConfig'
-  #   Properties:
-  #     EndpointConfigName: "cloudnokku_inference_endpoint_config"
-  #     ProductVariants:
-  #       - InstanceType: "ml.t2.medium"
-  #         InitialVariantWeight: 1
-  #         InitialInstanceCount: 1
-  #         ModelName: "cloudnokku_inference_model"
-  #         VariantName: 'AllTraffic'
-  #   DependsOn:
-  #     - SagemakerInferenceModel
+  SagemakerEndPointConfigInference:
+    Type: 'AWS::SageMaker::EndpointConfig'
+    Properties:
+      EndpointConfigName: "cloudnokku_inference_endpoint_config"
+      ProductVariants:
+        - InstanceType: "ml.t2.medium"
+          InitialVariantWeight: 1
+          InitialInstanceCount: 1
+          ModelName: "cloudnokku_inference_model"
+          VariantName: 'AllTraffic'
+    DependsOn:
+      - SagemakerInferenceModel
 
-  # SagemakerEndpointInference:
-  #   Type: "AWS::Sagemaker::Endpoint"
-  #   Properties:
-  #     EndpointName: "cloudnokku_inference_endpoint"
-  #     EndpointConfigName: "cloudnokku_inference_endpoint_config"
-  #   DependsOn:
-  #     - SagemakerEndPointConfigInference
+  SagemakerEndpointInference:
+    Type: "AWS::Sagemaker::Endpoint"
+    Properties:
+      EndpointName: "cloudnokku_inference_endpoint"
+      EndpointConfigName: "cloudnokku_inference_endpoint_config"
+    DependsOn:
+      - SagemakerEndPointConfigInference
 
   MyLayer:
     Type: AWS::Serverless::LayerVersion
